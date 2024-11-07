@@ -13,7 +13,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: https://jessicacirne.github.io/Convergentes-academy12.2-front-robot/report.html  
+      url:  https://jessicacirne.github.io/Convergentes-academy12.2-front-robot/report.html  
 
     steps:
       - name: Clonar repositório
@@ -30,13 +30,12 @@ jobs:
           pip install robotframework-seleniumlibrary
           pip install selenium
 
-      # Instalar Chrome
+      # Adicionando a instalação do Chrome e do ChromeDriver
       - name: Instalar Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      # Instalar versão compatível do ChromeDriver com a versão do Chrome
       - name: Instalar ChromeDriver
         run: |
           CHROME_VERSION=$(google-chrome --version | grep -oP "\d+\.\d+\.\d+")
@@ -75,4 +74,4 @@ jobs:
       - name: Deploy to Github Pages
         if: ${{ always() }}
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v1 
