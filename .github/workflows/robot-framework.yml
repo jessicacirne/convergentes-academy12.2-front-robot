@@ -1,4 +1,4 @@
-name: Robot Framework Tests
+name: Robot Framework Tests 
 
 on: push
 
@@ -24,26 +24,20 @@ jobs:
         with: 
           python-version: '3.x'
 
+      - name: Instalar dependências do Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -fy install
+          wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
+          sudo unzip /tmp/chromedriver.zip -d /usr/local/bin/
+
       - name: Instalar dependências
         run: |
           pip install robotframework
           pip install robotframework-seleniumlibrary
           pip install selenium
-
-      # Adicionando a instalação do Chrome e do ChromeDriver
-      - name: Instalar Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-
-      - name: Instalar ChromeDriver
-        run: |
-          CHROME_VERSION=$(google-chrome --version | grep -oP "\d+\.\d+\.\d+")
-          CHROME_DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-          wget -N "https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip" -P ~/
-          unzip ~/chromedriver_linux64.zip -d ~/
-          sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
-          sudo chmod +x /usr/local/bin/chromedriver
 
       - name: Executar o script geraDados.py
         run: |
@@ -51,8 +45,9 @@ jobs:
 
       - name: Rodar os testes do Robot Framework
         run: | 
-          robot testes/Login_de_usuario.robot
-          robot testes/Novo_cadastro_de_login.robot
+          mkdir -p results
+          robot -d results testes/Login_de_usuario.robot
+          robot -d results testes/Novo_cadastro_de_login.robot
 
       - name: Salvar resultado dos testes
         if: ${{ always() }}
@@ -74,4 +69,4 @@ jobs:
       - name: Deploy to Github Pages
         if: ${{ always() }}
         id: deployment
-        uses: actions/deploy-pages@v1 
+        uses: actions/deploy-pages@v1
