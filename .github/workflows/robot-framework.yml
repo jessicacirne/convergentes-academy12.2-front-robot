@@ -1,4 +1,4 @@
-name: Robot Framework Tests 
+name: Robot Framework Tests  
 
 on: push
 
@@ -24,13 +24,18 @@ jobs:
         with: 
           python-version: '3.x'
 
-      - name: Instalar dependências do Chrome
+      - name: Instalar dependências do Chrome e ChromeDriver
         run: |
           sudo apt-get update
           sudo apt-get install -y wget unzip
+          # Instalar Google Chrome
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -fy install
-          wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
+          # Detectar a versão do Chrome instalada
+          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
+          # Baixar a versão correspondente do ChromeDriver
+          DRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+          wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/${DRIVER_VERSION}/chromedriver_linux64.zip
           sudo unzip /tmp/chromedriver.zip -d /usr/local/bin/
 
       - name: Instalar dependências
