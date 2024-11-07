@@ -13,7 +13,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url:  https://jessicacirne.github.io/convergentes-academy12.2-front-robot/report.html  
+      url:  https://jessicacirne.github.io/Convergentes-academy12.2-front-robot/report.html  
 
     steps:
       - name: Clonar repositório
@@ -29,6 +29,21 @@ jobs:
           pip install robotframework
           pip install robotframework-seleniumlibrary
           pip install selenium
+
+      # Adicionando a instalação do Chrome e do ChromeDriver
+      - name: Instalar Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Instalar ChromeDriver
+        run: |
+          CHROME_VERSION=$(google-chrome --version | grep -oP "\d+\.\d+\.\d+")
+          CHROME_DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+          wget -N "https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip" -P ~/
+          unzip ~/chromedriver_linux64.zip -d ~/
+          sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
+          sudo chmod +x /usr/local/bin/chromedriver
 
       - name: Executar o script geraDados.py
         run: |
@@ -59,4 +74,4 @@ jobs:
       - name: Deploy to Github Pages
         if: ${{ always() }}
         id: deployment
-        uses: actions/deploy-pages@v1    
+        uses: actions/deploy-pages@v1 
