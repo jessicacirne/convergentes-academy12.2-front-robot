@@ -71,3 +71,77 @@ jobs:
         if: ${{ always() }}
         id: deployment
         uses: actions/deploy-pages@v1
+name: Robot Framework Tests  
+
+on: push
+
+jobs: 
+  test:
+    name: WEB Tests
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: https://jessicacirne.github.io/Convergentes-academy12.2-front-robot/report.html  
+
+    steps:
+      - name: Clonar repositório
+        uses: actions/checkout@v2
+
+      - name: Configurar Python
+        uses: actions/setup-python@v2
+        with: 
+          python-version: '3.x'
+
+      - name: Instalar dependências do Chrome e ChromeDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -fy install
+          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+' | head -1)
+          DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}")
+          wget -O /tmp/chromedriver.zip "https://chromedriver.storage.googleapis.com/${DRIVER_VERSION}/chromedriver_linux64.zip"
+          sudo unzip /tmp/chromedriver.zip -d /usr/local/bin/
+
+      - name: Instalar dependências
+        run: |
+          pip install robotframework
+          pip install robotframework-seleniumlibrary
+          pip install selenium
+
+      - name: Executar o script geraDados.py
+        run: |
+          python resources/geraDados.py
+
+      - name: Rodar os testes do Robot Framework
+        run: | 
+          mkdir -p results
+          robot --variable BROWSER:chrome --variable HEADLESS:true -d results testes/Login_de_usuario.robot
+          robot --variable BROWSER:chrome --variable HEADLESS:true -d results testes/Novo_cadastro_de_login.robot
+
+      - name: Salvar resultado dos testes
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: robot-results
+          path: ./results   
+
+      - name: Setup Pages
+        if: ${{ always() }}
+        uses: actions/configure-pages@v2
+
+      - name: Upload artifacts
+        if: ${{ always() }}
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: results/
+          
+      - name: Deploy to Github Pages
+        if: ${{ always() }}
+        id: deployment
+        uses: actions/deploy-pages@v1
