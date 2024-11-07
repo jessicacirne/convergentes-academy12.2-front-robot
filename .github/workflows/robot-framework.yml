@@ -1,78 +1,44 @@
-name: Robot Framework Tests
+name: Robot Web Tests
 
-on: push 
+on:  [push, pull_request]
 
 jobs:
-  
-  test_web:
-    name: Web Tests
-    runs-on: ubuntu-latest
+
+  test:
+
+    runs-on: windows-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+    - name:  Checkout Repository 
 
-      - name: Install dependencies
-        run: |
-          echo "Instalação das dependências do Projeto"
-          sudo apt-get update
-          sudo apt-get install -y wget unzip
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -fy install
-          
-          # Baixar a versão do ChromeDriver compatível com a versão do Chrome
-          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
-          DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}")
-          wget -O /tmp/chromedriver.zip "https://chromedriver.storage.googleapis.com/${DRIVER_VERSION}/chromedriver_linux64.zip"
-          sudo unzip /tmp/chromedriver.zip -d /usr/local/bin/
-          
-          # Instalar dependências do Robot Framework e Selenium
-          pip install robotframework
-          pip install robotframework-requests
-          pip install robotframework-seleniumlibrary
+      uses:  actions/checkout@v4
 
-      - name: Run Robot Framework tests
-        run: |
-          echo "Executando os testes de API e Web do Robot"
-          # Rodar os testes com Robot Framework
-          robot --name "API and Web Tests" --outputdir results/ testes
+    - name:  Set up Python
 
-      - name: Test Report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: robot-framework-report-web
-          path: results/
+      uses:  actions/setup-python@v2
 
-  deploy:
-    name: Deploy GitHub Pages 🌐
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: https://jessicacirne.github.io/Convergentes-academy12.2-front-robot/report.html
-    steps:
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      with:
 
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4
-        with: 
-          name: robot-framework-report-web
+        python-version: '3.12'
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./results/
+    - name:  Install dependencies
 
-      - name: Deploy to Github Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      run:
+        pip install robotframework
+        pip install robotframework-requests
+        pip install robotframework-seleniumlibrary
+
+    - name:  Run Robot Framework tests
+
+      run:
+
+        robot --name "TestesFront" --outputdir FRONT/ testes/
+
+    - name:  Test Report
+
+      uses:  actions/upload-artifact@v4
+
+      with:
+        name:  robot-framework-report
+        path:  results/**
