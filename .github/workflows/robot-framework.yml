@@ -30,16 +30,16 @@ jobs:
           pip install robotframework-seleniumlibrary
           pip install selenium
 
-      # Adicionando a instalação do Chrome e do ChromeDriver
+      # Instalar Chrome
       - name: Instalar Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
+      # Instalar ChromeDriver usando uma versão estável e conhecida
       - name: Instalar ChromeDriver
         run: |
-          CHROME_VERSION=$(google-chrome --version | grep -oP "\d+\.\d+\.\d+")
-          CHROME_DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+          CHROME_DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_114")
           wget -N "https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip" -P ~/
           unzip ~/chromedriver_linux64.zip -d ~/
           sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
@@ -74,4 +74,4 @@ jobs:
       - name: Deploy to Github Pages
         if: ${{ always() }}
         id: deployment
-        uses: actions/deploy-pages@v1 
+        uses: actions/deploy-pages@v1
