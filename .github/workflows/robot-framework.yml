@@ -36,11 +36,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      # Instalar ChromeDriver automaticamente compatível com o Chrome
+      # Instalar versão compatível do ChromeDriver com a versão do Chrome
       - name: Instalar ChromeDriver
-        uses: browser-actions/setup-chromedriver@v1
-        with:
-          chrome-version: 'latest'  # Pode ser 'stable' ou outra versão, se necessário
+        run: |
+          CHROME_VERSION=$(google-chrome --version | grep -oP "\d+\.\d+\.\d+")
+          CHROME_DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+          wget -N "https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip" -P ~/
+          unzip ~/chromedriver_linux64.zip -d ~/
+          sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
+          sudo chmod +x /usr/local/bin/chromedriver
 
       - name: Executar o script geraDados.py
         run: |
@@ -72,4 +76,3 @@ jobs:
         if: ${{ always() }}
         id: deployment
         uses: actions/deploy-pages@v1
-
