@@ -13,7 +13,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url:  https://jessicacirne.github.io/Convergentes-academy12.2-front-robot/report.html  
+      url: https://jessicacirne.github.io/Convergentes-academy12.2-front-robot/report.html  
 
     steps:
       - name: Clonar repositório
@@ -36,14 +36,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      # Instalar ChromeDriver usando uma versão estável e conhecida
+      # Instalar ChromeDriver automaticamente compatível com o Chrome
       - name: Instalar ChromeDriver
-        run: |
-          CHROME_DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_114")
-          wget -N "https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip" -P ~/
-          unzip ~/chromedriver_linux64.zip -d ~/
-          sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
-          sudo chmod +x /usr/local/bin/chromedriver
+        uses: browser-actions/setup-chromedriver@v1
+        with:
+          chrome-version: 'latest'  # Pode ser 'stable' ou outra versão, se necessário
 
       - name: Executar o script geraDados.py
         run: |
@@ -75,3 +72,4 @@ jobs:
         if: ${{ always() }}
         id: deployment
         uses: actions/deploy-pages@v1
+
