@@ -3,9 +3,7 @@ name: Robot Web Tests
 on: [push, pull_request]
 
 jobs:
-
   test:
-
     runs-on: windows-latest
 
     permissions:
@@ -32,18 +30,18 @@ jobs:
           pip install robotframework-requests
           pip install robotframework-seleniumlibrary
 
-    - name:  Run Robot Framework tests
-      run:
-        robot --name "TestesFront" --outputdir FRONT/ testes/
+    - name: Run Robot Framework tests for each file
+      run: |
+        robot --name "Login_de_usuario" --outputdir "results/Login_de_usuario" "testes/Login_de_usuario.robot"
+        robot --name "Novo_cadastro_de_login" --outputdir "results/Novo_cadastro_de_login" "testes/Novo_cadastro_de_login.robot"
 
-    - name:  Test Report
-      uses:  actions/upload-artifact@v4
+    - name: Test Report
+      uses: actions/upload-artifact@v4
       with:
-        name:  robot-framework-report
-        path:  results/**
+        name: robot-framework-report
+        path: results/**
 
   deploy:
-
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     needs: test  # Garante que a execução do teste foi concluída antes de tentar fazer o deploy
@@ -71,3 +69,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
