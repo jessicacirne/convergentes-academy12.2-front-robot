@@ -12,23 +12,22 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url:  https://jessicacirne.github.io/convergentes-academy12.2-front-robot/report.html  
+      url: https://jessicacirne.github.io/convergentes-academy12.2-front-robot/report.html  
 
     steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-    - name:  Checkout Repository
-      uses:  actions/checkout@v4
-
-    - name:  Set up Python
-      uses:  actions/setup-python@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
         python-version: '3.12'
 
     - name: Install dependencies
       run: |
-          pip install robotframework
-          pip install robotframework-requests
-          pip install robotframework-seleniumlibrary
+        pip install robotframework
+        pip install robotframework-requests
+        pip install robotframework-seleniumlibrary
 
     - name: Run Robot Framework tests for each file
       run: |
@@ -61,12 +60,16 @@ jobs:
           name: robot-framework-report
           path: ./results
 
+      - name: Move report to the root directory for GitHub Pages
+        run: |
+          mv results/Login_de_usuario/report.html ./report.html
+          mv results/Novo_cadastro_de_login/report.html ./report.html
+
       - name: Upload the artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./results
+          path: ./report.html
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
