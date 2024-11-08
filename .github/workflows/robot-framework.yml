@@ -1,6 +1,6 @@
 name: Robot Web Tests
 
-on:  [push, pull_request]
+on: [push, pull_request]
 
 jobs:
 
@@ -8,18 +8,22 @@ jobs:
 
     runs-on: windows-latest
 
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url:  https://jessicacirne.github.io/convergentes-academy12.2-front-robot/report.html  
+
     steps:
 
-    - name:  Checkout Repository 
-
+    - name:  Checkout Repository
       uses:  actions/checkout@v4
 
     - name:  Set up Python
-
       uses:  actions/setup-python@v2
-
       with:
-
         python-version: '3.12'
 
     - name: Install dependencies
@@ -29,15 +33,41 @@ jobs:
           pip install robotframework-seleniumlibrary
 
     - name:  Run Robot Framework tests
-
       run:
-
         robot --name "TestesFront" --outputdir FRONT/ testes/
 
     - name:  Test Report
-
       uses:  actions/upload-artifact@v4
-
       with:
         name:  robot-framework-report
         path:  results/**
+
+  deploy:
+
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: test  # Garante que a execução do teste foi concluída antes de tentar fazer o deploy
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Set up Pages
+        uses: actions/configure-pages@v5
+
+      - name: Download Report Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: robot-framework-report
+          path: ./results
+
+      - name: Upload the artifact to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./results
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
