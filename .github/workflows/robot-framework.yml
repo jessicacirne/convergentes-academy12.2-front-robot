@@ -4,8 +4,7 @@ on: push
 
 jobs:
   test:
-    name: API Tests
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     permissions:
       contents: read
@@ -17,13 +16,13 @@ jobs:
       url: https://jessicacirne.github.io/convergentes-academy12.2-front-robot/report.html  # URL adaptada para o novo repositório
 
     steps:
-      - name: Clonar repositório
-        uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Configurar Python
+      - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: '3.12'
 
       - name: Instalar dependências
         run: |
@@ -31,10 +30,10 @@ jobs:
           pip install robotframework-requests
           pip install robotframework-seleniumlibrary
 
-      - name: Executar os testes do Robot Framework
+      - name: Run Robot Framework tests for each file
         run: |
-          robot -d results testes/Login_de_usuario.robot  # Nome dos testes ajustado para o novo repositório
-          robot -d results testes/Novo_cadastro_de_login.robot  # Nome dos testes ajustado para o novo repositório
+          robot --name "Login_de_usuario" --outputdir "results/Login_de_usuario" "testes/Login_de_usuario.robot"
+          robot --name "Novo_cadastro_de_login" --outputdir "results/Novo_cadastro_de_login" "testes/Novo_cadastro_de_login.robot"
 
       - name: Salvar resultado dos testes
         if: ${{ always() }}
