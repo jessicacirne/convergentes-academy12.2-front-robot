@@ -6,7 +6,7 @@ Test Teardown   Fechar navegador
 *** Test Cases ***
 CT1.2.1 - Validação de cadastro login com sucesso (Botão Salvar Novo)
     [Documentation]    CN02: Fluxo realizado como esperado
-    [Tags]    Positivo 
+    [Tags]    Validação Positiva 
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -25,7 +25,7 @@ CT1.2.1 - Validação de cadastro login com sucesso (Botão Salvar Novo)
 
 CT1.2.2 - Validação de cadastro login com sucesso (Botão Cancelar) 
     [Documentation]    CN02: Fluxo realizado como esperado
-    [Tags]    Positivo
+    [Tags]    Validação Positiva
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -44,7 +44,7 @@ CT1.2.2 - Validação de cadastro login com sucesso (Botão Cancelar)
 
 CT1.3.1 - Campos do formulário vazios
     [Documentation]    CN3: Verificação de campos vazios
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -58,7 +58,7 @@ CT1.3.1 - Campos do formulário vazios
 
 CT1.4.1 - Verificar o limite máximo de 100 caracteres no campo Nome
     [Documentation]    CN4: Validação do Campo "Nome completo"
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -77,7 +77,7 @@ CT1.4.1 - Verificar o limite máximo de 100 caracteres no campo Nome
           
 CT1.4.2 - Verificar se o campo Nome completo aceita apenas letras  
     [Documentation]    CN4: Validação do Campo "Nome completo"
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -98,7 +98,7 @@ CT1.4.2 - Verificar se o campo Nome completo aceita apenas letras
 
 CT1.4.3 - Verificar se o campo possui no mínimo duas palavras
     [Documentation]    CN4: Validação do Campo "Nome completo"
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -117,7 +117,7 @@ CT1.4.3 - Verificar se o campo possui no mínimo duas palavras
     
 CT1.5.1 - Verificar formato inválido no campo E-mail (ex.: diferente de nome@dominio.com ou com espaços)
     [Documentation]   CN5: Validação do Campo "E-mail" 
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -142,7 +142,7 @@ CT1.5.1 - Verificar formato inválido no campo E-mail (ex.: diferente de nome@do
 
 CT1.6.1 - Verificar a regra de no mínimo 8 e no máximo 12 caracteres no campo Senha
     [Documentation]    CN6: Validação do Campo "Senha"
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -164,7 +164,7 @@ CT1.6.1 - Verificar a regra de no mínimo 8 e no máximo 12 caracteres no campo 
 
 CT1.6.2 - Campo senha sem usar letras maiúsculas
     [Documentation]    CN6: Validação do Campo "Senha"
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -182,7 +182,7 @@ CT1.6.2 - Campo senha sem usar letras maiúsculas
     Clicar no botão Salvar Novo
 CT1.6.3 - Campo senha sem usar letras minúsculas
     [Documentation]    CN6: Validação do Campo "Senha"
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -200,7 +200,7 @@ CT1.6.3 - Campo senha sem usar letras minúsculas
     Clicar no botão Salvar Novo
 CT1.6.4 - Campo senha sem usar números
     [Documentation]    CN6: Validação do Campo "Senha"
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -218,7 +218,7 @@ CT1.6.4 - Campo senha sem usar números
     Clicar no botão Salvar Novo
 CT1.6.5 - Campo senha sem usar caracteres especiais
     [Documentation]    CN6: Validação do Campo "Senha"
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -237,7 +237,7 @@ CT1.6.5 - Campo senha sem usar caracteres especiais
 
 CT1.7.1 - Verificar se Confirmar senha corresponde à senha original
     [Documentation]    Validação do Campo "Confirmar Senha"   
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -256,7 +256,7 @@ CT1.7.1 - Verificar se Confirmar senha corresponde à senha original
 
 CT1.8.1 - Verificar se CPF contém 11 dígitos 
     [Documentation]    CN8: Validação do campo CPF
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -275,7 +275,7 @@ CT1.8.1 - Verificar se CPF contém 11 dígitos
 
 CT1.8.2: Verificar se CPF contém letras
     [Documentation]    CN8: Validação do campo CPF
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -294,7 +294,7 @@ CT1.8.2: Verificar se CPF contém letras
 
 CT1.8.2 - Verificar se CPF contém caracteres especiais
     [Documentation]    CN8: Validação do campo CPF
-    [Tags]    Negativo
+    [Tags]    Validação Negativa
 
     Acessar a pagina de login
     Digitar um e-mail válido

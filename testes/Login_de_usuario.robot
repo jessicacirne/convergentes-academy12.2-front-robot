@@ -7,7 +7,7 @@ Test Teardown   Fechar navegador
 # CN2: Novo cadastro de Login com sucesso
 CT1.1.1 - Validação de E-mail e senha válidos
     [Documentation]    CN01: Novo cadastro de Login com sucesso
-    [Tags]    Positivo   
+    [Tags]    Validação Positiva   
 
     Acessar a pagina de login
     Digitar um e-mail válido
@@ -16,7 +16,7 @@ CT1.1.1 - Validação de E-mail e senha válidos
 
 CT1.2.1 - Validação de campos obrigatórios em branco
     [Documentation]    CN02: Fluxo incorreto
-    [Tags]    Negativo  
+    [Tags]    Validação Negativa  
 
     Acessar a pagina de login
     Deixar o e-mail em branco    
@@ -25,7 +25,7 @@ CT1.2.1 - Validação de campos obrigatórios em branco
 
 CT1.2.2 - Validação de E-mail inválido + Senha válida
     [Documentation]    CN02: Fluxo incorreto
-    [Tags]    Negativo  
+    [Tags]    Validação Negativa  
 
     Acessar a pagina de login
     Dígitar E-mail de login inválido 
@@ -34,7 +34,7 @@ CT1.2.2 - Validação de E-mail inválido + Senha válida
 
 CT1.2.3 - Validação de E-mail válido + Senha inválida
     [Documentation]    CN02: Fluxo incorreto
-    [Tags]    Negativo  
+    [Tags]    Validação Negativa  
 
     Acessar a pagina de login
     Digitar um e-mail válido
