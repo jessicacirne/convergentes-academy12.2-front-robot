@@ -32,8 +32,7 @@ jobs:
 
       - name: Run Robot Framework tests for each file
         run: |
-          robot --name "Login_de_usuario" --outputdir "results/Login_de_usuario" "testes/Login_de_usuario.robot"
-          robot --name "Novo_cadastro_de_login" --outputdir "results/Novo_cadastro_de_login" "testes/Novo_cadastro_de_login.robot"
+          robot -d results testes
 
       - name: Salvar resultado dos testes
         if: ${{ always() }}
