@@ -14,7 +14,7 @@ Ct001 - Editar usuario com nome completo em branco
     Clicar em salvar as alteraçoes 
     Verificar mensagem informando campo nome obrigatorio
 
-Ct002 - Editar usuario com nome completo em branco
+Ct002 - Editar usuario com email em branco
     [Documentation]    CN02: Fluxo incorreto
     [Tags]    Validação Negativa 
 
