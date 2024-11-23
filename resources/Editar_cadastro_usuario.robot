@@ -100,7 +100,7 @@ Verificar mensagem informando campo email obrigatorio
 
 Preencher email com formato invalido
      Wait Until Element Is Visible       locator=${novoNome}
-     Input Text         ${Ct001.novoEmail}        text=Josilvaldo_cruzqacoders.com
+     Input Text         ${novoEmail}        text=Josilvaldo_cruzqacoders.com
 
 Verificar mensagem informando campo email invalido
     ${msg}=    Get Text    ${msgEmailInvalido}
